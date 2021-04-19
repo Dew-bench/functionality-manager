@@ -3,14 +3,16 @@ import socket
 import json
 import requests
 
+from lib import pipelineHandler
+
 app = Flask(__name__)
 
 DEVICES = {}
-PIPES = {}
 DEPLOYMENTS = {}
 BROKERS = {}
 SERVICE = {}
 
+plHandler = pipelineHandler.pipelineHandler()
 
 def create_proxy_for_device():
     pass
@@ -25,7 +27,8 @@ def ask_broker_for_service(service_id, depl_name):
             response = requests.put(url, data=json.dumps({'id':service_id, 'depl':DEPLOYMENTS[depl_name]}), headers={"Content-Type": "application/json"})
         except requests.exceptions.RequestException as e:
             print(e)
-
+        
+        return response
 
 
 ######################################
@@ -66,18 +69,18 @@ def list_device():
 @app.route('/api/pipeline/add/pipe', methods=['POST', 'PUT'])
 def add_pipe():
     data = request.get_json() 
-    PIPES[data['name']] = data 
+    plHandler.add_pipe(data)
     return "ok"
 
 @app.route('/api/pipeline/remove/pipe', methods=['POST', 'PUT'])
 def remove_pipe():
     data = request.get_json() 
-    PIPES.pop(data['name'])
+    plHandler.remove_pipe(data)
     return "ok"
 
 @app.route('/api/pipeline/list/pipe', methods=['GET'])
 def list_pipe():
-    return json.dumps(PIPES)
+    return json.dumps(plHandler.list_pipes())
 
 ######################################
 
@@ -119,4 +122,4 @@ def list_brokers():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5011)
