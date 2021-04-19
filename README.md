@@ -1,1 +1,1 @@
-# dew-service-manager
+# dew-service-manager [![Docker Image CI](https://github.com/Dew-bench/dew-service-manager/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Dew-bench/dew-service-manager/actions/workflows/docker-image.yml)
