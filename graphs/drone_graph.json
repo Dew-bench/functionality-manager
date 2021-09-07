@@ -1,0 +1,41 @@
+{
+  "name":"drone-to-database",
+  "device":"drone",
+  "graph":{
+    
+    "DroneManager":{
+      "service":"drone-manager-service",
+      "instance-per-functionality":"single",
+      "connection-port":5005,
+      
+      "graph":{
+        
+        "DroneImageRecognition":{
+          "service":"drone-image-recognition-service",
+          "instance-per-functionality":"scale",
+          "connection-port":5005,
+          "graph":{
+            "DroneStorage":"reuse"
+          }
+        },
+        
+        "DronePathCreator":{
+          "service":"drone-path-creator-service",
+          "instance-per-functionality":"scale",
+          "connection-port":5005,
+          "graph":{
+            "DroneStorage":"reuse"
+          }
+        },
+        
+        "DroneStorage":{
+          "service":"drone-storage-service",
+          "instance-per-functionality":"single",
+          "connection-port":5005,
+          "graph":{}
+        }
+        
+      }
+    }
+  }
+}
