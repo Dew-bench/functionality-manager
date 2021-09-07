@@ -1,0 +1,12 @@
+{
+"settings":{
+  "depl_name" : "drone-d-$id-a",
+  "container_name"  : "drone-c-$id-a",
+  "image" : "luciantin/virtual-drone",
+  "label" :  {"app": "drone-d-$id-a"},
+  "container_port" : 5005,
+  "requests" : {"cpu": "100m", "memory": "200Mi"},
+  "limits" : {"cpu": "500m", "memory": "500Mi"},
+  "command": ""
+  }
+}
